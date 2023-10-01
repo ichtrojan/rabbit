@@ -1,6 +1,6 @@
 # Rabbit
 
-![rabbit-hero](https://github.com/ichtrojan/horus/assets/5338836/d941abe3-d232-4393-91f5-7dc2fe37536c)
+![rabbit-hero](https://github.com/ichtrojan/rabbit/assets/5338836/123bd830-3330-4853-8e14-e6ba41113843)
 
 ## Introduction
 
