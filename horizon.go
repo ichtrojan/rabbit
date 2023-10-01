@@ -2,6 +2,7 @@ package rabbit
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/google/uuid"
@@ -27,6 +28,10 @@ func (c Config) Dispatch(params ...Param) error {
 	jobId := uuid.New().String()
 
 	pushedAt := time.Now().Unix()
+
+	if c.AppName == "" {
+		return errors.New("AppName is required in config")
+	}
 
 	appName := strings.ToLower(c.AppName)
 
