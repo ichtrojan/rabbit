@@ -1,23 +1,23 @@
-# Horizon
+# Rabbit
 
-![horizon-hero](https://github.com/ichtrojan/horus/assets/5338836/d941abe3-d232-4393-91f5-7dc2fe37536c)
+![rabbit-hero](https://github.com/ichtrojan/horus/assets/5338836/d941abe3-d232-4393-91f5-7dc2fe37536c)
 
 ## Introduction
 
-If you ever wanted a way to trigger your Laravel jobs from Golang to leverage the features that [Laravel Horizon](https://laravel.com/docs/10.x/horizon) provides, this is the package for you.
+If you ever wanted a way to trigger your Laravel jobs from Golang to leverage the features that [Laravel Horizon](https://laravel.com/docs/10.x/horizon) provides. Rabbit is the package for you.
 
 ## Installation
 
-Run the following command to install `horizon` on your Go project:
+Run the following command to install `rabbit` on your Go project:
 
 ```bash
-go get github.com/ichtrojan/horizon
+go get github.com/ichtrojan/rabbit
 ```
 
 ## Config
 
 ```go
-queue := horizon.Config{
+queue := rabbit.Config{
     AppName: "horizon",
     Conn:    client,
     Job:     "App\\Jobs\\SendEmail",
@@ -59,7 +59,7 @@ class ExampleJob {
 Your horizon parameter definition should look like this:
 
 ```go
-params := []horizon.Param{
+params := []rabbit.Param{
     {Type: "public", Name: "id", Value: "0000-000000-00000-00000"},
     {Type: "private", Name: "address", Value: "1 Apple Park Way, Cupertino, California, USA"},
     {Type: "protected", Name: "message", Value: "stay foolish, stay hungry"},
@@ -93,7 +93,7 @@ package main
 import (
 	"fmt"
 	"github.com/go-redis/redis"
-	"github.com/ichtrojan/horizon"
+	"github.com/ichtrojan/rabbit"
 )
 
 func main() {
@@ -103,15 +103,15 @@ func main() {
 		DB:       0,
 	})
 
-	queue := horizon.Config{
-		AppName: "horizon",
+	queue := rabbit.Config{
+		AppName: "rabbit",
 		Conn:    client,
 		Job:     "App\\Jobs\\SendEmail",
 		Queue:   "default",
 		Delay:   10,
 	}
 
-	params := []horizon.Param{
+	params := []rabbit.Param{
 		{Type: "public", Name: "id", Value: "0000-000000-00000-00000"},
 		{Type: "private", Name: "address", Value: "1 Apple Park Way, Cupertino, California, USA"},
 		{Type: "protected", Name: "message", Value: "stay foolish, stay hungry"},
