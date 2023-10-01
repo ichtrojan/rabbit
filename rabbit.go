@@ -33,6 +33,14 @@ func (c Config) Dispatch(params ...Param) error {
 		return errors.New("AppName is required in config")
 	}
 
+	if c.Queue == "" {
+		return errors.New("queue is required in config")
+	}
+
+	if c.Job == "" {
+		return errors.New("job is required in config")
+	}
+
 	appName := strings.ToLower(c.AppName)
 
 	payload, err := json.Marshal(map[string]interface{}{
