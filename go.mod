@@ -1,4 +1,4 @@
-module github.com/ichtrojan/horizon
+module github.com/ichtrojan/rabbit
 
 go 1.19
 

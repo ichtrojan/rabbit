@@ -1,4 +1,4 @@
-package horizon
+package rabbit
 
 import (
 	"fmt"
