@@ -4,7 +4,7 @@
 
 ## Introduction
 
-If you ever wanted a way to trigger your Laravel jobs from Golang to leverage the features that [Laravel Horizon](https://laravel.com/docs/10.x/horizon) provides. Rabbit is the package for you.
+If you ever want a way to trigger your Laravel jobs from Golang to leverage the features that [Laravel Horizon](https://laravel.com/docs/10.x/horizon) provides. Rabbit is the package for you.
 
 ## Installation
 
