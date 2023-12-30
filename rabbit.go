@@ -164,13 +164,13 @@ func (c Config) generateProperty(params ...Param) string {
 				param.Value,
 			)
 		case "public":
-			generatedParams = fmt.Sprintf(
+			generatedParams += fmt.Sprintf(
 				"s:%d:\"%s\";s:%d:\"%s\";",
 				len(param.Name), param.Name, len(param.Value),
 				param.Value,
 			)
 		default:
-			generatedParams = fmt.Sprintf(
+			generatedParams += fmt.Sprintf(
 				"s:%d:\"%s\";s:%d:\"%s\";",
 				len(param.Name), param.Name, len(param.Value),
 				param.Value,
