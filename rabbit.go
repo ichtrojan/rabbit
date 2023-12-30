@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/go-redis/redis"
-	"github.com/google/uuid"
 	"strings"
 	"time"
+
+	"github.com/go-redis/redis"
+	"github.com/google/uuid"
 )
 
 type Config struct {
@@ -55,7 +56,12 @@ func (c Config) Dispatch(params ...Param) error {
 		"retryUntil":    nil,
 		"data": map[string]string{
 			"commandName": c.Job,
-			"command":     fmt.Sprintf("O:%d:\"%s\":11:{%ss:3:\"job\";N;s:10:\"connection\";N;s:5:\"queue\";s:7:\"%s\";s:15:\"chainConnection\";N;s:10:\"chainQueue\";N;s:19:\"chainCatchCallbacks\";N;s:5:\"delay\";%ss:11:\"afterCommit\";N;s:10:\"middleware\";a:0:{}s:7:\"chained\";a:0:{}}", len(c.Job), c.Job, c.generateProperty(params...), c.Queue, c.generateDelay()),
+			"command": fmt.Sprintf(
+				"O:%d:\"%s\":11:{%ss:3:\"job\";N;s:10:\"connection\";N;s:5:\"queue\";s:7:\"%s\";"+
+					"s:15:\"chainConnection\";N;s:10:\"chainQueue\";N;s:19:\"chainCatchCallbacks\";"+
+					"N;s:5:\"delay\";%ss:11:\"afterCommit\";N;s:10:\"middleware\";a:0:{}s:7:\"chained\";a:0:{}}",
+				len(c.Job), c.Job, c.generateProperty(params...), c.Queue, c.generateDelay(),
+			),
 		},
 		"id":       jobId,
 		"attempts": 0,
@@ -146,17 +152,29 @@ func (c Config) generateProperty(params ...Param) string {
 	for _, param := range params {
 		switch param.Type {
 		case "private":
-			generatedParams = generatedParams + fmt.Sprintf("s:%d:\"\u0000%s\u0000%s\";s:%d:\"%s\";", len(c.Job)+2, c.Job, param.Name, len(param.Value), param.Value)
-			break
+			generatedParams += fmt.Sprintf(
+				"s:%d:\"\u0000%s\u0000%s\";s:%d:\"%s\";",
+				len(c.Job)+2, c.Job, param.Name, len(param.Value),
+				param.Value,
+			)
 		case "protected":
-			generatedParams = generatedParams + fmt.Sprintf("s:%d:\"\u0000*\u0000%s\";s:%d:\"%s\";", len(param.Name)+3, param.Name, len(param.Value), param.Value)
-			break
+			generatedParams += fmt.Sprintf(
+				"s:%d:\"\u0000*\u0000%s\";s:%d:\"%s\";",
+				len(param.Name)+3, param.Name, len(param.Value),
+				param.Value,
+			)
 		case "public":
-			generatedParams = generatedParams + fmt.Sprintf("s:%d:\"%s\";s:%d:\"%s\";", len(param.Name), param.Name, len(param.Value), param.Value)
-			break
+			generatedParams = fmt.Sprintf(
+				"s:%d:\"%s\";s:%d:\"%s\";",
+				len(param.Name), param.Name, len(param.Value),
+				param.Value,
+			)
 		default:
-			generatedParams = generatedParams + fmt.Sprintf("s:%d:\"%s\";s:%d:\"%s\";", len(param.Name), param.Name, len(param.Value), param.Value)
-			break
+			generatedParams = fmt.Sprintf(
+				"s:%d:\"%s\";s:%d:\"%s\";",
+				len(param.Name), param.Name, len(param.Value),
+				param.Value,
+			)
 		}
 	}
 
