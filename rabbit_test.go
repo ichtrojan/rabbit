@@ -3,8 +3,9 @@ package rabbit
 import (
 	"errors"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGeneratePublicProperty(t *testing.T) {
@@ -41,7 +42,11 @@ func TestGenerateProtectedProperty(t *testing.T) {
 	c := Config{Job: "testJob"}
 	generatedParams := c.generateProperty(params...)
 
-	expectedParams := fmt.Sprintf("s:%d:\"\u0000*\u0000%s\";s:%d:\"%s\";", len("paramName")+3, "paramName", len("paramValue"), "paramValue")
+	expectedParams := fmt.Sprintf(
+		"s:%d:\"\u0000*\u0000%s\";s:%d:\"%s\";",
+		len("paramName")+3, "paramName", len("paramValue"),
+		"paramValue",
+	)
 
 	assert.Equal(t, expectedParams, generatedParams)
 }
@@ -54,7 +59,11 @@ func TestGeneratePrivateProperty(t *testing.T) {
 	c := Config{Job: "testJob"}
 	generatedParams := c.generateProperty(params...)
 
-	expectedParams := fmt.Sprintf("s:%d:\"\u0000%s\u0000%s\";s:%d:\"%s\";", len(c.Job)+2, c.Job, "paramName", len("paramValue"), "paramValue")
+	expectedParams := fmt.Sprintf(
+		"s:%d:\"\u0000%s\u0000%s\";s:%d:\"%s\";",
+		len(c.Job)+2, c.Job, "paramName", len("paramValue"),
+		"paramValue",
+	)
 
 	assert.Equal(t, expectedParams, generatedParams)
 }
