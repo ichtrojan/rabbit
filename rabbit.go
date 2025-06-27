@@ -55,7 +55,7 @@ func (c Config) Dispatch(params ...Param) error {
 		"retryUntil":    nil,
 		"data": map[string]string{
 			"commandName": c.Job,
-			"command":     fmt.Sprintf("O:%d:\"%s\":11:{%ss:3:\"job\";N;s:10:\"connection\";N;s:5:\"queue\";s:7:\"%s\";s:15:\"chainConnection\";N;s:10:\"chainQueue\";N;s:19:\"chainCatchCallbacks\";N;s:5:\"delay\";%ss:11:\"afterCommit\";N;s:10:\"middleware\";a:0:{}s:7:\"chained\";a:0:{}}", len(c.Job), c.Job, c.generateProperty(params...), c.Queue, c.generateDelay()),
+			"command":     fmt.Sprintf("O:%d:\"%s\":%d:{%ss:3:\"job\";N;s:10:\"connection\";N;s:5:\"queue\";s:7:\"%s\";s:15:\"chainConnection\";N;s:10:\"chainQueue\";N;s:19:\"chainCatchCallbacks\";N;s:5:\"delay\";%ss:11:\"afterCommit\";N;s:10:\"middleware\";a:0:{}s:7:\"chained\";a:0:{}}", len(c.Job), c.Job, 10+len(params), c.generateProperty(params...), c.Queue, c.generateDelay()),
 		},
 		"id":       jobId,
 		"attempts": 0,
